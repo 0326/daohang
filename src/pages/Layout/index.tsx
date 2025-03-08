@@ -1,14 +1,16 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import {
   GithubFilled,
   QuestionCircleFilled,
   SearchOutlined,
 } from '@ant-design/icons';
+import { Skeleton } from 'antd';
 import type { ProSettings } from '@ant-design/pro-components';
 import { ProLayout } from '@ant-design/pro-components';
 import { Input } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import NavProps from '../../Nav';
+import { getLayoutConfig } from './helper';
+import { useAppStore } from '../../stores'
 
 const settings: ProSettings | undefined = {
   fixSiderbar: true,
@@ -22,8 +24,35 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
+let isDataReady = false
+
 const Layout: FC<LayoutProps> = ({ children }) => {
+  const [loading, setLoading] = useState(true);
+  const { initDb, setTenant, setCategory, category, getWebsite } = useAppStore()
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const init = async () => {
+      const start = performance.now()
+      console.log('init data start: ', start)
+      await initDb()
+      const { _id } = await setTenant('ai')
+      await setCategory(_id)
+      setLoading(false)
+      const end = performance.now()
+      console.log(`init data end: ${end}(耗时 ${end - start} ms)`)
+    }
+    if (!isDataReady) {
+      init()
+    }
+
+    return () => {
+      // 本地开发 useEffect 会执行两次，这里增加标记位确保只请求一次
+      // isDataReady = !!location.port
+      isDataReady = false
+    }
+  }, []);
+
   return (
     <div
       id="daohang-pro-layout"
@@ -32,7 +61,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
       }}
     >
       <ProLayout
-        {...NavProps}
+        {...getLayoutConfig(category)}
         menu={{
           // defaultOpenAll: true,
           // type: 'sub',
@@ -102,6 +131,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
             onClick={() => {
               console.log('item.path', item.path)
               navigate(item.path || '/');
+              getWebsite(item._id)
             }}
           >
             {dom}
@@ -109,7 +139,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         )}
         {...settings}
       >
-        {children}
+        {loading ? <Skeleton active /> : children}
       </ProLayout>
     </div>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Flex, Tag } from 'antd';
+import { Card, Flex } from 'antd';
 import { HeartFilled } from '@ant-design/icons';
 
 
@@ -8,12 +8,13 @@ import './index.less';
 const { Meta } = Card;
 
 export type BigCardProps = {
-  title: string;
+  _id: string;
+  name: string;
   cover: string;
   favorite?: boolean;
 }
 
-const BigCard: React.FC<BigCardProps> = ({ title, cover, favorite }) => (
+const BigCard: React.FC<BigCardProps> = ({ name, cover, favorite }) => (
   <Card
     hoverable
     className='big-card-comp'
@@ -29,7 +30,7 @@ const BigCard: React.FC<BigCardProps> = ({ title, cover, favorite }) => (
     <Meta
       title={
         <Flex justify='space-between' align='center'>
-          <div className='big-card-title'>{title}</div>
+          <div className='big-card-title'>{name}</div>
           <div className='big-card-favorite'>
             <HeartFilled style={{ color: favorite ? '#DA6CD4' : '#A6A6A6' }} />
             <span className='big-card-favorite-num'>21</span>

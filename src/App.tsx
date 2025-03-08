@@ -8,13 +8,12 @@ import Category from './pages/Category'
 import './App.less'
 
 function App() {
-  // const [count, setCount] = useState(0)
-
   return (
     <Layout>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/category" element={<Category />} />
         <Route path="/category/:id" element={<Category />} />
         <Route path="*" element={<Home />} />
       </Routes>
