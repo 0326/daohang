@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sites",
+  "info": {
+    "singularName": "site",
+    "pluralName": "sites",
+    "displayName": "Site",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "favicon": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "string",
+      "required": true
+    },
+    "cover": {
+      "type": "string"
+    },
+    "stars": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::star.star",
+      "mappedBy": "site"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "sites"
+    }
+  }
+}
