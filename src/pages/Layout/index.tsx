@@ -2,15 +2,16 @@ import { FC, useEffect, useState } from 'react';
 import {
   GithubFilled,
   QuestionCircleFilled,
+  LogoutOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { Skeleton } from 'antd';
+import { Skeleton, Dropdown } from 'antd';
 import type { ProSettings } from '@ant-design/pro-components';
 import { ProLayout } from '@ant-design/pro-components';
 import { Input } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { getLayoutConfig } from './helper';
-import { useAppStore } from '../../stores'
+import { useAppStore } from '../../stores/strapi'
 
 const settings: ProSettings | undefined = {
   fixSiderbar: true,
@@ -28,16 +29,15 @@ let isDataReady = false
 
 const Layout: FC<LayoutProps> = ({ children }) => {
   const [loading, setLoading] = useState(true);
-  const { initDb, setTenant, setCategory, category, getWebsite } = useAppStore()
+  const { initTenant, categories, getWebsites, user, login } = useAppStore()
   const navigate = useNavigate();
 
   useEffect(() => {
     const init = async () => {
       const start = performance.now()
       console.log('init data start: ', start)
-      await initDb()
-      const { _id } = await setTenant('ai')
-      await setCategory(_id)
+      login()
+      await initTenant('ai')
       setLoading(false)
       const end = performance.now()
       console.log(`init data end: ${end}(耗时 ${end - start} ms)`)
@@ -53,6 +53,8 @@ const Layout: FC<LayoutProps> = ({ children }) => {
     }
   }, []);
 
+  // console.log('categories', categories, getLayoutConfig(categories))
+
   return (
     <div
       id="daohang-pro-layout"
@@ -61,16 +63,43 @@ const Layout: FC<LayoutProps> = ({ children }) => {
       }}
     >
       <ProLayout
-        {...getLayoutConfig(category)}
+        {...getLayoutConfig(categories)}
         menu={{
           // defaultOpenAll: true,
           // type: 'sub',
           // loading: true,
         }}
         avatarProps={{
-          src: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
+          src: user?.avatar || 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
           size: 'small',
-          title: '七妮妮',
+          title:  user?.username,
+          render: (props, dom) => {
+            return (
+              <Dropdown
+                menu={{
+                  items: [
+                    {
+                      key: 'admin',
+                      icon: <LogoutOutlined />,
+                      label: '后台管理',
+                    },
+                    {
+                      key: 'userinfo',
+                      icon: <LogoutOutlined />,
+                      label: '个人设置',
+                    },
+                    {
+                      key: 'logout',
+                      icon: <LogoutOutlined />,
+                      label: '退出登录',
+                    },
+                  ],
+                }}
+              >
+                {dom}
+              </Dropdown>
+            );
+          },
         }}
         actionsRender={(props) => {
           if (props.isMobile) return [];
@@ -129,9 +158,8 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         menuItemRender={(item, dom) => (
           <div
             onClick={() => {
-              console.log('item.path', item.path)
               navigate(item.path || '/');
-              getWebsite(item._id)
+              getWebsites(item.documentId)
             }}
           >
             {dom}

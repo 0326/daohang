@@ -137,7 +137,7 @@ const appList = [
   },
 ]
 
-export function getLayoutConfig (categoryRoutes) {
+export function getLayoutConfig (categories) {
   return {
     title: '',
     logo: <img src={reactLogo} alt="logo" />,
@@ -155,7 +155,7 @@ export function getLayoutConfig (categoryRoutes) {
           icon: <CrownFilled />,
           // access: 'canAdmin',
           // component: './Admin',
-          routes: categoryRoutes?.map((item) => ({ path: `/category/${item._id}`, ...item })),
+          routes: categories?.map((item) => ({ path: `/category/${item.dir}`, name: item.name, documentId: item.documentId })),
         },
         // {
         //   name: '列表页',
