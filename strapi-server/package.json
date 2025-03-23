@@ -1,5 +1,5 @@
 {
-  "name": "strapi-daohang",
+  "name": "strapi-server",
   "version": "0.1.0",
   "private": true,
   "description": "A Strapi application",
@@ -9,18 +9,19 @@
     "deploy": "strapi deploy",
     "dev": "strapi develop",
     "develop": "strapi develop",
-    "develop:tencent": "strapi develop NODE_ENV=tencentcloud",
+    "seed:example": "node ./scripts/seed.js",
     "start": "strapi start",
     "strapi": "strapi",
     "upgrade": "npx @strapi/upgrade latest",
     "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.11.2",
-    "@strapi/plugin-users-permissions": "5.11.2",
-    "@strapi/strapi": "5.11.2",
-    "better-sqlite3": "^11.9.0",
-    "mysql2": "3.9.8",
+    "@strapi/plugin-cloud": "5.11.3",
+    "@strapi/plugin-users-permissions": "5.11.3",
+    "@strapi/strapi": "5.11.3",
+    "better-sqlite3": "11.3.0",
+    "fs-extra": "^10.0.0",
+    "mime-types": "^2.1.27",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
@@ -37,6 +38,6 @@
     "npm": ">=6.0.0"
   },
   "strapi": {
-    "uuid": "bdd2dbe9-641f-4a65-a90d-73a37d1d029a"
+    "uuid": "c83849ea-7955-4f49-a986-bfbe2ed4a485"
   }
 }
