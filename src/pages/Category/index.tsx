@@ -10,7 +10,7 @@ const MyComponent: React.FC = () => {
 
   useEffect(() => {
     const pathId = window.location.pathname.split('/').pop();
-    const docId = categories?.find((item) => item.dir === pathId)?.documentId;
+    const docId = categories?.find((item) => item.slug === pathId)?.documentId;
     if (pathId === 'category' &&  window.location.pathname === '/category') {
       return
     }

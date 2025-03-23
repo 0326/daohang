@@ -1,40 +1,7 @@
 import { create } from 'zustand'
 import qs from 'qs'
 import { strapi, API_HOST } from '../utils/api'
-
-// import { initCloudbase, queryTenant, queryCategoryByTenantId, queryWebsite } from '../services'
-
-export type UserType = {
-  _id: string
-  username: string
-  avatar: string
-  email: string
-}
-
-export type TenantType = {
-  id: string
-  name: string
-  logo: string
-  domain: string
-  documentId: string
-}
-
-export type CategoryType = {
-  id: string
-  documentId: string
-  name: string
-  dir: string
-  icon?: string
-}
-
-export type WebsiteType = {
-  id: string
-  name: string
-  cover: string
-  favicon: string
-  description: string
-  url: string
-}
+import { CategoryType, TenantType, UserType, WebsiteType } from '../type'
 
 type State = {
   user?: UserType,
@@ -49,7 +16,6 @@ type Action = {
   logout: () => void
   initDb: (env?: string) => void
   initTenant: (domain?: string) => void
-  // setCategory: (tenantId: string) => Promise<Array<CategoryType>>
   getWebsites: (categoryId?: string) => Promise<WebsiteType[]>
 }
 
@@ -61,9 +27,11 @@ export const useAppStore = create<State & Action>((set, get) => ({
   websites: undefined,
   login: () => {
     set(() => ({ user: {
-      _id: 'B1B5XLCDS8',
+      id: 'B1B5XLCDS8',
       username: 'testuser',
-      avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+      avatar: {
+        fullUrl: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+      },
       email: 'testuser@qq.com'
     } }))
   },
@@ -88,7 +56,7 @@ export const useAppStore = create<State & Action>((set, get) => ({
           fields: ['url', 'formats']
         },
         categories: {
-          fields: ['name', 'dir'],
+          fields: ['name', 'slug'],
           populate: {
             icon: {
               fields: ['url', 'formats']
@@ -127,14 +95,22 @@ export const useAppStore = create<State & Action>((set, get) => ({
   getWebsites: async (categoryId?: string) => {
     const query = qs.stringify({
       populate: {
-        sites: {
-          fields: ['name', 'cover', 'favicon', 'description', 'url']
+        websites: {
+          fields: ['name', 'description', 'url'],
+          populate: {
+            cover: {
+              fields: ['url', 'formats']
+            },
+            favicon: {
+              fields: ['url', 'formats']
+            }
+          }
         }
       }
     });
     try {
       const { data: { data }} = await strapi.get(`/categories/${categoryId}?${query}`)
-      const websites = data.sites;
+      const websites = data.websites;
       set(() => ({ websites }))
     } catch (error) {
       console.error('getWebsites error:', error)

@@ -16,7 +16,8 @@
       "type": "string"
     },
     "slug": {
-      "type": "uid"
+      "type": "uid",
+      "required": true
     },
     "articles": {
       "type": "relation",
@@ -26,6 +27,26 @@
     },
     "description": {
       "type": "text"
+    },
+    "type": {
+      "type": "integer"
+    },
+    "icon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "websites": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::website.website",
+      "inversedBy": "categories"
     }
   }
 }

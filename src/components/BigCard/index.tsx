@@ -1,7 +1,8 @@
 import React from 'react';
 import { Avatar, Card, Flex, Typography, Tag } from 'antd';
 import { StarTwoTone, ExportOutlined } from '@ant-design/icons';
-
+import { MediaType, WebsiteType } from '../../type';
+import { getMediaUrl } from '../../utils/api';
 
 import './index.less';
 
@@ -9,22 +10,13 @@ const { Meta } = Card;
 const { Paragraph } = Typography;
 const DEFAULT_COVER = "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png";
 
-function getThumb(url) {
-  if (url?.indexOf('aliyuncs.com') > -1) {
-    return url + '?x-oss-process=image/resize,l_600,m_lfit';
-  }
-  return url || DEFAULT_COVER;
+function getThumb(media?: MediaType) {
+  return getMediaUrl(media) || DEFAULT_COVER;
 }
 
 export type BigCardProps = {
-  id: string;
-  name: string;
-  cover: string;
-  favicon?: string;
-  description?: string;
   favorite?: boolean;
-  url?: string;
-}
+} & WebsiteType;
 
 const BigCard: React.FC<BigCardProps> = ({ name, url, cover, favicon, description, favorite }) => (
   <Card
@@ -50,7 +42,7 @@ const BigCard: React.FC<BigCardProps> = ({ name, url, cover, favicon, descriptio
       title={
         <a href={url} target='_blank' rel='noreferrer'>
           <Flex justify='space-between' align='center'>
-            <div className='big-card-title'><Avatar src={favicon} size="small" /><span>{name}</span></div>
+            <div className='big-card-title'><Avatar src={getMediaUrl(favicon)} size="small" /><span>{name}</span></div>
             <ExportOutlined />
           </Flex>
         </a>

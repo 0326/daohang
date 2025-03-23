@@ -1,7 +1,9 @@
 import {
+  ChromeFilled,
   // ChromeFilled,
   CrownFilled,
   SmileFilled,
+  TabletFilled,
   // TabletFilled,
 } from '@ant-design/icons';
 import reactLogo from '../../assets/logo.png'
@@ -155,58 +157,57 @@ export function getLayoutConfig (categories) {
           icon: <CrownFilled />,
           // access: 'canAdmin',
           // component: './Admin',
-          routes: categories?.map((item) => ({ path: `/category/${item.dir}`, name: item.name, documentId: item.documentId })),
+          routes: categories?.map((item) => ({ path: `/category/${item.slug}`, name: item.name, documentId: item.documentId })),
         },
         // {
         //   name: '列表页',
         //   icon: <TabletFilled />,
-        //   path: '/list',
-        //   component: './ListTableList',
-        //   routes: [
-        //     {
-        //       path: '/list/sub-page',
-        //       name: '列表页面',
-        //       icon: <CrownFilled />,
-        //       routes: [
-        //         {
-        //           path: 'sub-sub-page1',
-        //           name: '一一级列表页面',
-        //           icon: <CrownFilled />,
-        //           component: './Welcome',
-        //         },
-        //         {
-        //           path: 'sub-sub-page2',
-        //           name: '一二级列表页面',
-        //           icon: <CrownFilled />,
-        //           component: './Welcome',
-        //         },
-        //         {
-        //           path: 'sub-sub-page3',
-        //           name: '一三级列表页面',
-        //           icon: <CrownFilled />,
-        //           component: './Welcome',
-        //         },
-        //       ],
-        //     },
-        //     {
-        //       path: '/list/sub-page2',
-        //       name: '二级列表页面',
-        //       icon: <CrownFilled />,
-        //       component: './Welcome',
-        //     },
-        //     {
-        //       path: '/list/sub-page3',
-        //       name: '三级列表页面',
-        //       icon: <CrownFilled />,
-        //       component: './Welcome',
-        //     },
-        //   ],
+        //   path: '/news',
+          // routes: [
+          //   {
+          //     path: '/list/sub-page',
+          //     name: '列表页面',
+          //     icon: <CrownFilled />,
+          //     routes: [
+          //       {
+          //         path: 'sub-sub-page1',
+          //         name: '一一级列表页面',
+          //         icon: <CrownFilled />,
+          //         component: './Welcome',
+          //       },
+          //       {
+          //         path: 'sub-sub-page2',
+          //         name: '一二级列表页面',
+          //         icon: <CrownFilled />,
+          //         component: './Welcome',
+          //       },
+          //       {
+          //         path: 'sub-sub-page3',
+          //         name: '一三级列表页面',
+          //         icon: <CrownFilled />,
+          //         component: './Welcome',
+          //       },
+          //     ],
+          //   },
+          //   {
+          //     path: '/list/sub-page2',
+          //     name: '二级列表页面',
+          //     icon: <CrownFilled />,
+          //     component: './Welcome',
+          //   },
+          //   {
+          //     path: '/list/sub-page3',
+          //     name: '三级列表页面',
+          //     icon: <CrownFilled />,
+          //     component: './Welcome',
+          //   },
+          // ],
         // },
-        // {
-        //   path: 'https://ant.design',
-        //   name: 'Ant Design 官网外链',
-        //   icon: <ChromeFilled />,
-        // },
+        {
+          path: 'https://ant.design',
+          name: '精选资讯',
+          icon: <ChromeFilled />,
+        },
       ],
     },
     appList,
