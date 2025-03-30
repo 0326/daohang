@@ -23,9 +23,10 @@ export type MediaType = {
 }
 
 export type UserType = {
-  id: string
+  id?: string
+  documentId: string
   username: string
-  avatar: MediaType
+  avatar?: MediaType
   email: string
 }
 
@@ -53,4 +54,13 @@ export type WebsiteType = {
   favicon?: MediaType
   description: string
   url: string
+}
+
+export type FavoriteType = {
+  id: string
+  name: string
+  url: string
+  icon?: string
+  category?: string
+  refsite?: WebsiteType
 }

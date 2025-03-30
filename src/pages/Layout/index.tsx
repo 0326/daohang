@@ -12,6 +12,7 @@ import { Input } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { getLayoutConfig } from './helper';
 import { useAppStore } from '../../stores/strapi'
+import LoginModal from '../../components/Login';
 
 const settings: ProSettings | undefined = {
   fixSiderbar: true,
@@ -29,14 +30,15 @@ let isDataReady = false
 
 const Layout: FC<LayoutProps> = ({ children }) => {
   const [loading, setLoading] = useState(true);
-  const { initTenant, categories, getWebsites, user, login } = useAppStore()
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const { initTenant, categories, getWebsites, user, checkLogin, logout } = useAppStore()
   const navigate = useNavigate();
 
   useEffect(() => {
     const init = async () => {
       const start = performance.now()
       console.log('init data start: ', start)
-      login()
+      checkLogin()
       await initTenant('ai')
       setLoading(false)
       const end = performance.now()
@@ -70,10 +72,21 @@ const Layout: FC<LayoutProps> = ({ children }) => {
           // loading: true,
         }}
         avatarProps={{
-          src: user?.avatar || 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
+          // src: user?.avatar || 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
           size: 'small',
-          title:  user?.username,
+          title:  user?.username || '登录/注册',
           render: (props, dom) => {
+            if (!user?.username) {
+              return (
+                <div
+                  onClick={() => {
+                    setShowLoginModal(true);
+                  }}
+                >
+                  {dom}
+                </div>
+              );
+            }
             return (
               <Dropdown
                 menu={{
@@ -92,6 +105,9 @@ const Layout: FC<LayoutProps> = ({ children }) => {
                       key: 'logout',
                       icon: <LogoutOutlined />,
                       label: '退出登录',
+                      onClick: () => {
+                        logout();
+                      }
                     },
                   ],
                 }}
@@ -169,6 +185,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
       >
         {loading ? <Skeleton active /> : children}
       </ProLayout>
+      <LoginModal visible={showLoginModal} onClose={() => { setShowLoginModal(false) }} />
     </div>
   );
 };

@@ -2,90 +2,18 @@ import React, { useEffect } from 'react';
 import Search from './Search';
 import Sites from './Sites';
 import './index.less'
-
-
-const data = [
-  {
-    title: 'Google',
-    url: 'https://www.google.com',
-    icon: 'https://www.google.com/favicon.ico',
-  },
-  {
-    title: 'Facebook',
-    url: 'https://www.facebook.com',
-    icon: 'https://www.facebook.com/favicon.ico',
-  },
-  {
-    title: 'Twitter',
-    url: 'https://www.twitter.com',
-    icon: 'https://www.twitter.com/favicon.ico',
-  },
-  {
-    title: 'Google',
-    url: 'https://www.google.com',
-    icon: 'https://www.google.com/favicon.ico',
-  },
-  {
-    title: 'Facebook',
-    url: 'https://www.facebook.com',
-    icon: 'https://www.facebook.com/favicon.ico',
-  },
-  {
-    title: 'Twitter',
-    url: 'https://www.twitter.com',
-    icon: 'https://www.twitter.com/favicon.ico',
-  },
-  {
-    title: 'Google',
-    url: 'https://www.google.com',
-    icon: 'https://www.google.com/favicon.ico',
-  },
-  {
-    title: 'Facebook',
-    url: 'https://www.facebook.com',
-    icon: 'https://www.facebook.com/favicon.ico',
-  },
-  {
-    title: 'Twitter',
-    url: 'https://www.twitter.com',
-    icon: 'https://www.twitter.com/favicon.ico',
-  },
-  {
-    title: 'Google',
-    url: 'https://www.google.com',
-    icon: 'https://www.google.com/favicon.ico',
-  },
-  {
-    title: 'Facebook',
-    url: 'https://www.facebook.com',
-    icon: 'https://www.facebook.com/favicon.ico',
-  },
-  {
-    title: 'Twitter',
-    url: 'https://www.twitter.com',
-    icon: 'https://www.twitter.com/favicon.ico',
-  },
-  {
-    title: 'Google',
-    url: 'https://www.google.com',
-    icon: 'https://www.google.com/favicon.ico',
-  },
-  {
-    title: 'Facebook',
-    url: 'https://www.facebook.com',
-    icon: 'https://www.facebook.com/favicon.ico',
-  },
-  {
-    title: 'TwitterTwitterTwitterTwitter',
-    url: 'https://www.twitter.com',
-    icon: 'https://www.twitter.com/favicon.ico',
-  },
-];
+import { useAppStore } from '../../stores/strapi';
 
 const MyComponent: React.FC = () => {
+  const { getFavorites, favorites, user } = useAppStore()
   useEffect(() => {
     const root = document.querySelector('.ant-pro-layout-bg-list')
     root!.style.backgroundImage = `url(https://www.bing.com/th?id=OHR.DanumValley_ROW7259991229_1920x1080.webp)`
+    const init = async () => {
+      await getFavorites()
+    }
+    init()
+
     return () => {
       root!.style.backgroundImage = ''
     }
@@ -95,7 +23,7 @@ const MyComponent: React.FC = () => {
       {/* <h1>Hello, World!</h1> */}
       <Search />
       <div className='sites-container'>
-        <Sites data={data} />
+        <Sites data={favorites} showAdd={!!user?.documentId} />
       </div>
     </div>
   );
