@@ -76,6 +76,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
           size: 'small',
           title:  user?.username || '登录/注册',
           render: (props, dom) => {
+            console.log(props)
             if (!user?.username) {
               return (
                 <div

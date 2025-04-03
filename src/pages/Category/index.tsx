@@ -23,9 +23,9 @@ const MyComponent: React.FC = () => {
     })
   }, []);
 
-  const addClick = async () => {
-    // await batchWebsite(db)
-  }
+  // const addClick = async () => {
+  //   // await batchWebsite(db)
+  // }
 
   return (
     <div>

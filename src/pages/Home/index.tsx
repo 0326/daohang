@@ -8,6 +8,8 @@ const MyComponent: React.FC = () => {
   const { getFavorites, favorites, user } = useAppStore()
   useEffect(() => {
     const root = document.querySelector('.ant-pro-layout-bg-list')
+     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     root!.style.backgroundImage = `url(https://www.bing.com/th?id=OHR.DanumValley_ROW7259991229_1920x1080.webp)`
     const init = async () => {
       await getFavorites()
@@ -15,6 +17,8 @@ const MyComponent: React.FC = () => {
     init()
 
     return () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       root!.style.backgroundImage = ''
     }
   }, []);

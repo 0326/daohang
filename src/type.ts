@@ -33,7 +33,7 @@ export type UserType = {
 export type TenantType = {
   id: string
   name: string
-  logo?: MediaType
+  logo?: MediaType | string
   domain: string
   documentId: string
 }

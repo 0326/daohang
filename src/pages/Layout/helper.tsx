@@ -3,7 +3,7 @@ import {
   // ChromeFilled,
   CrownFilled,
   SmileFilled,
-  TabletFilled,
+  // TabletFilled,
   // TabletFilled,
 } from '@ant-design/icons';
 import reactLogo from '../../assets/logo.png'
