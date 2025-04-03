@@ -1,0 +1,51 @@
+{
+    "kind": "collectionType",
+    "collectionName": "websites",
+    "info": {
+        "singularName": "website",
+        "pluralName": "websites",
+        "displayName": "Website",
+        "description": ""
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "attributes": {
+        "name": {
+            "type": "string",
+            "required": true
+        },
+        "description": {
+            "type": "string"
+        },
+        "url": {
+            "type": "string"
+        },
+        "cover": {
+            "allowedTypes": [
+                "images",
+                "files",
+                "videos",
+                "audios"
+            ],
+            "type": "media",
+            "multiple": false
+        },
+        "favicon": {
+            "allowedTypes": [
+                "images",
+                "files",
+                "videos",
+                "audios"
+            ],
+            "type": "media",
+            "multiple": false
+        },
+        "categories": {
+            "type": "relation",
+            "relation": "manyToMany",
+            "target": "api::category.category",
+            "mappedBy": "websites"
+        }
+    }
+}
