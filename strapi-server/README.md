@@ -21,6 +21,7 @@ npm run start
 # or
 yarn start
 ```
+PM2: https://pm2.fenxianglu.cn/docs/general/cli
 
 ### `build`
 
